@@ -1,0 +1,20 @@
+const fs=require("fs"), vm=require("vm"), crypto=require("crypto");
+(async()=>{
+ const key=Buffer.alloc(32,42), code=key.toString("base64url"), iv=Buffer.alloc(12,7);
+ const e=crypto.createCipheriv("aes-256-gcm",key,iv);
+ const blob=Buffer.concat([iv,e.update(JSON.stringify({username:"test-user",password:"test-password"})),e.final(),e.getAuthTag()]).toString("base64url");
+ const source=fs.readFileSync("校园网快捷指令.js","utf8").replace("在此填入分享码",code);
+ let clicked=false; const elements={username:{dispatchEvent(){}},password:{dispatchEvent(){}}, "login-account":{click(){clicked=true}}};
+ let done; const complete=new Promise(resolve=>done=resolve);
+ const context={location:{protocol:"https:",hostname:"tree.buct.edu.cn"},crypto:crypto.webcrypto,Uint8Array,TextDecoder,atob,Event:class{},document:{getElementById:id=>elements[id]},fetch:async()=>({ok:true,json:async()=>({blob})}),completion:done};
+ vm.runInNewContext(source,context);const output=await complete;
+ if(!clicked||elements.username.value!=="test-user"||elements.password.value!=="test-password"||!output.includes("已提交"))throw Error(output);
+ const workerSource=fs.readFileSync("../cloudflare-pages/public/_worker.js","utf8");
+ const worker=(await import("data:text/javascript;base64,"+Buffer.from(workerSource).toString("base64"))).default;
+ const env={CAMPUS_WORKER:{fetch:async()=>new Response('{"blob":"test"}')}};
+ const url="https://example.test/v1/"+"a".repeat(64);
+ const allowed=await worker.fetch(new Request(url,{headers:{Origin:"https://tree.buct.edu.cn"}}),env);
+ const denied=await worker.fetch(new Request(url,{headers:{Origin:"https://other.example"}}),env);
+ if(allowed.headers.get("access-control-allow-origin")!=="https://tree.buct.edu.cn"||denied.headers.has("access-control-allow-origin"))throw Error("CORS check failed");
+ console.log("Synthetic sharing, form submission, and restricted CORS tests passed.");
+})().catch(e=>{console.error(e);process.exitCode=1});

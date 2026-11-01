@@ -6,20 +6,29 @@ export default {
         headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" }
       });
     }
-    if (url.pathname === "/ios" && request.method === "GET")
-      return Response.redirect(new URL("/ios/", url), 308);
-    if (url.pathname.startsWith("/ios/") && request.method === "GET") {
-      const response = await env.ASSETS.fetch(request);
-      const headers = new Headers(response.headers);
+    if ((url.pathname === "/ios/sw.js" || url.pathname === "/ios/shortcut.txt") && request.method === "GET") {
+      const result = await env.ASSETS.fetch(request);
+      const headers = new Headers(result.headers);
       headers.set("Cache-Control", "no-store");
       headers.set("X-Content-Type-Options", "nosniff");
-      headers.set("Content-Security-Policy", "default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'");
       headers.set("Referrer-Policy", "no-referrer");
-      return new Response(response.body, {status:response.status, headers});
+      return new Response(result.body, { status: result.status, headers });
+    }
+    if (url.pathname === "/ios" || url.pathname.startsWith("/ios/")) {
+      return new Response("iPhone 网页版已停用，请使用快捷指令。", {
+        status: 410, headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" }
+      });
     }
     if (!/^\/v1\/[a-f0-9]{64}$/.test(url.pathname) || url.search || !["GET", "PUT"].includes(request.method)) {
       return Response.json({ error: "not found" }, { status: 404, headers: { "Cache-Control": "no-store" } });
     }
-    return env.CAMPUS_WORKER.fetch(request);
+    const result = await env.CAMPUS_WORKER.fetch(request);
+    if (request.method === "GET" && request.headers.get("Origin") === "https://tree.buct.edu.cn") {
+      const headers = new Headers(result.headers);
+      headers.set("Access-Control-Allow-Origin", "https://tree.buct.edu.cn");
+      headers.append("Vary", "Origin");
+      return new Response(result.body, { status: result.status, headers });
+    }
+    return result;
   }
 };
