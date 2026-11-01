@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f6fa">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="校园网">
+<link rel="apple-touch-icon" href="/ios/icon-180.png">
+<link rel="manifest" href="/ios/manifest.webmanifest">
+<link rel="stylesheet" href="/ios/app.css">
+<title>校园网助手</title>
+<script src="/ios/app.js" defer></script>
+</head>
+<body>
+<main class="app">
+  <header class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9a14 14 0 0 1 18 0M6.5 12.5a9 9 0 0 1 11 0M10 16a3.5 3.5 0 0 1 4 0"/><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/></svg></span><div><strong>校园网助手</strong><small>BUCT · CAMPUS NETWORK</small></div><span class="tag">iPhone</span></header>
+  <section id="home" class="screen">
+    <div class="intro"><h1>你好，校园网</h1><p>连接校园网络，从这里开始。</p></div>
+    <div class="card connect"><div class="cardtop"><div><span class="eyebrow">校园网络</span><h2 id="statusTitle">准备连接</h2></div><span class="statusIcon" aria-hidden="true">⌁</span></div><p id="statusDesc">先同步账号，再连接校园 Wi-Fi。</p><button class="primary" id="login">连接校园网 <span>→</span></button></div>
+    <div class="sectiontitle">账号管理</div>
+    <div class="card menu">
+      <button class="row" id="toUser"><span class="tile">☻</span><span class="rowtext"><b>我是使用者</b><small>使用分享码同步账号</small></span><span class="chevron">›</span></button>
+      <button class="row" id="toOwner"><span class="tile">⌘</span><span class="rowtext"><b>账户拥有者</b><small>上传账号并生成分享码</small></span><span class="chevron">›</span></button>
+    </div>
+    <p class="foot">先联网同步，连接校园网后再打开认证页面。账号信息保存在当前设备的网页数据中。</p>
+    <button class="text danger" id="clear" hidden>清除本机账号</button>
+  </section>
+  <section id="user" class="screen" hidden><button class="back">‹ 返回</button><div class="intro"><h1>同步共享账号</h1><p>在有互联网时，输入账户拥有者提供的分享码。</p></div>
+    <form id="userForm" class="card form"><label for="share">账号分享码</label><input id="share" type="text" placeholder="粘贴分享码" autocapitalize="none" autocomplete="off" spellcheck="false" required><p class="hint">同步后，账号会保存在当前设备。分享码可能取回完整密码，请妥善保管。</p><button class="primary" type="submit">同步并保存 <span>→</span></button></form>
+  </section>
+  <section id="owner" class="screen" hidden><button class="back">‹ 返回</button><div class="intro"><h1>账户拥有者</h1><p>账号先在本机加密，再上传到云端。</p></div>
+    <form id="ownerForm" class="card form"><label for="username">校园网账号</label><input id="username" type="text" placeholder="输入账号" autocomplete="username" autocapitalize="none" spellcheck="false" required><label for="password">校园网密码</label><input id="password" type="password" placeholder="输入密码" autocomplete="current-password" required><p class="hint">首次上传后生成分享码。重新上传将更新同一分享码对应的账号。</p><button class="primary" type="submit">加密并上传 <span>→</span></button><button id="existingShare" class="secondary" type="button" hidden>查看我的分享码</button></form>
+  </section>
+  <section id="sharePage" class="screen" hidden><button class="back">‹ 返回</button><div class="intro"><h1>账号已上传</h1><p>将分享码发送给您信任的使用者。</p></div><div class="card form"><label>账号分享码</label><p id="showCode" class="code"></p><button class="primary" id="copyCode">复制分享码 <span>↗</span></button><p class="hint">持有分享码的人可以取回完整账号和密码。请只分享给可信任的人。</p></div></section>
+  <section id="connectPage" class="screen" hidden><button class="back">‹ 返回</button><div class="intro"><h1>连接校园网</h1><p>先连接校园 Wi-Fi，再到学校页面完成认证。</p></div><div class="card form"><span class="eyebrow">第一步</span><h2>复制账号和密码</h2><p class="hint">先复制账号，在学校页面粘贴；再回到这里复制密码并粘贴。</p><div class="credential"><span>账号</span><strong id="maskedUser"></strong><button class="copy" id="copyUser">复制</button></div><div class="credential"><span>密码</span><strong>••••••••</strong><button class="copy" id="copyPass">复制</button></div><div class="divider"></div><span class="eyebrow">第二步</span><h2>打开认证页面</h2><p class="hint">在学校页面分别粘贴账号和密码，然后点击登录。</p><a class="primary link" href="https://tree.buct.edu.cn/srun_portal_phone?ac_id=20&amp;theme=basic" target="_blank" rel="noopener">打开校园网认证 <span>↗</span></a></div></section>
+  <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+</main>
+</body></html>

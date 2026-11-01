@@ -1,0 +1,293 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    list-style: none;
+    background: none;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+html {
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+button {
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a {
+    color: #303133;
+}
+
+a:hover {
+    color: #1976D2;
+}
+
+.component.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.component.dialog {
+    user-select: auto;
+}
+.component.dialog.confirm {
+    z-index: 1000;
+}
+
+.component.dialog.promt {
+    z-index: 100;
+}
+
+.component.dialog .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.component.dialog .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 400px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    background: #FFFFFF;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 0);
+    transition: all .3s;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2),
+    0 4px 5px rgba(0,0,0,0.14),
+    0 1px 10px rgba(0,0,0,0.12);
+}
+
+.component.dialog .content ul,
+.component.dialog .content ol {
+    padding-left: 2em;
+}
+
+.component.dialog .content ul li {
+    list-style: disc;
+}
+
+.component.dialog .content ol li {
+    list-style: decimal;
+}
+
+.component.dialog.active {
+    visibility: visible;
+}
+
+.component.dialog.active .content {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+}
+
+.component.dialog.active .mask {
+    opacity: 1;
+}
+
+.component.dialog .header,
+.component.dialog .section,
+.component.dialog .control{
+    box-sizing: border-box;
+}
+
+.component.dialog .header {
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #303133;
+    background: #FFFFFF;
+}
+
+.component.dialog .section {
+    padding: 0 20px;
+    line-height: 1.8;
+    overflow-x: hidden
+}
+
+.component.dialog .control {
+    position: sticky;
+    bottom: 0;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: right;
+    font-size: 0;
+    background: #FFFFFF;
+}
+
+.component.dialog .control button {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.component.dialog .btn-confirm {
+    background: rgba(64, 158, 255, .1);
+    color: #409EFF;
+}
+
+.component.dialog .btn-confirm:hover {
+    background: rgba(64, 158, 255, .2);
+}
+
+.component.dialog .btn-confirm:active {
+    background: rgba(64, 158, 255, .3);
+}
+
+.component.dialog .btn-cancel {
+    color: #F56C6C;
+}
+
+.component.dialog .btn-cancel:hover {
+    background: rgba(245, 108, 108, .2);
+}
+
+.component.dialog .btn-cancel:active {
+    background: rgba(245, 108, 108, .3);
+}
+
+@media screen and (max-width: 768px) {
+    .component.dialog .content {
+        min-width: auto;
+        width: 90%;
+    }
+}
+
+.portal-loading{position:fixed;left:0;top:0;width:100%;height:100%;background:#888;background:rgba(0,0,0,.7);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);z-index:1000;opacity:0;visibility:hidden;transition:all .3s}
+.portal-loading.active{opacity:1;visibility:visible}
+.portal-loading .loading-content{position:absolute;width:100%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.portal-loading .loading-text{width:100%;text-align:center;color:#fff}
+.portal-loading .loader{position:relative;width:60px;margin:0 auto 20px auto}
+.portal-loading .loader:before{content:'';display:block;padding-top:100%}
+.portal-loading .loader svg{animation:rotate 2s linear infinite;height:100%;transform-origin:center center;width:100%;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto}
+.portal-loading .loader circle{stroke-dasharray:1,200;stroke-dashoffset:0;animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;stroke-linecap:round}
+@keyframes rotate{100%{transform:rotate(360deg)}}
+@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:89,200;stroke-dashoffset:-35px}100%{stroke-dasharray:89,200;stroke-dashoffset:-124px}}
+@keyframes color{0%,100%{stroke:#f56c6c}40%{stroke:#409eff}66%{stroke:#67c23a}80%,90%{stroke:#e6a23c}}
+
+.portal-animate-dialog{position:fixed;left:0;top:0;width:100%;height:100%;background:#888;background:rgba(0,0,0,.7);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);z-index:100;opacity:0;visibility:hidden;transition:all .3s .3s}
+.portal-animate-dialog.active{opacity:1;visibility:visible;transition:all .3s}
+
+.portal-animate-dialog .portal-animate{position:absolute;left:50%;top:50%;width:100%;transform:translate(-50%,-50%);text-align:center}
+.portal-animate-dialog .portal-animate .circle{stroke-dasharray:1194;stroke-dashoffset:1194}
+.portal-animate-dialog .portal-animate .tick,.portal-animate-dialog .portal-animate .cross{stroke-dasharray:350;stroke-dashoffset:350}
+.portal-animate-dialog .portal-animate .title{opacity:0;margin:20px 0 0;font-size:30px;color:#FFF}
+.portal-animate-dialog.active .portal-animate .circle{animation:circle 1s ease-in-out forwards}
+.portal-animate-dialog.active .portal-animate .tick{animation:tick .8s .95s ease-in-out forwards}
+.portal-animate-dialog.active .portal-animate .title{animation:title .6s 1.2s ease-in-out forwards}
+.portal-animate-dialog.active .portal-animate .left{animation:cross .8s .95s ease-in-out forwards}
+.portal-animate-dialog.active .portal-animate .right{animation:cross .8s 1.2s ease-in-out forwards}
+@keyframes circle{from{stroke-dashoffset:1194}to{stroke-dashoffset:2388}}
+@keyframes tick{from{stroke-dashoffset:350}to{stroke-dashoffset:0}}
+@keyframes cross{from{stroke-dashoffset:350}to{stroke-dashoffset:0}}
+@keyframes title{from{opacity:0}to{opacity:1}}
+
+.portal-dialog{position:fixed;left:0;top:0;width:100%;height:100%;background:#888;background:rgba(0,0,0,.7);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);z-index:100;opacity:0;visibility:hidden;transition:all .3s .3s}
+.portal-dialog .panel-bg{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer}
+.portal-dialog .panel-content{position:absolute;width:100%;bottom:0;background:#fff;box-sizing:border-box;padding:20px;transform:translateY(100%);transition:all .3s ease-in-out;box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);overflow-y:auto}
+.portal-dialog .btn-confirm{width:100%;height:50px;background:#409eff;border-radius:4px;color:#fff;font-size:14px}
+.portal-dialog .btn-confirm:hover,.portal-dialog .btn-confirm:active{background:#2f8dee}
+.portal-dialog .panel-header{position:relative;margin-bottom:40px;color:#303133}
+.portal-dialog .panel-header .btn-back-pay,.portal-dialog .panel-header .btn-close{color:#303133;font-size:14px}
+.portal-dialog .panel-header .btn-back-pay .icon,.portal-dialog .panel-header .btn-close .icon{margin-right:5px}
+.portal-dialog .panel-header .header-title{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:400;color:#303133}
+.portal-dialog .item-title{font-weight:400;margin-bottom:20px;color:#626266;}
+.portal-dialog .item-title .icon{display:inline-block;width:20px}
+.portal-dialog .item-list{border:1px solid #dcdfe6;border-radius:4px;overflow:hidden}
+.portal-dialog .item-list li{height:60px;padding:10px 20px;box-sizing:border-box;border-bottom:1px solid #dcdfe6;vertical-align:top;line-height:39px;cursor:pointer}
+.portal-dialog .item-list li.active{background:#409eff;color:#fff}
+.portal-dialog .item-list li:last-child{border:0}
+.portal-dialog.active{opacity:1;visibility:visible;transition:all .3s}
+.portal-dialog.active .panel-content{transform:translateY(0);transition:all .3s .3s ease-in-out}
+.portal-dialog.panel-pay .panel-content{bottom:0;padding-bottom:40px;border-radius:5px 5px 0 0;overflow-x:hidden;color:#606266}
+.portal-dialog.panel-pay .pay-title{font-weight:400;font-size:17px;margin-bottom:40px;text-align:center}
+.portal-dialog.panel-pay .order-info li{line-height:50px;height:50px;font-weight:400;border-bottom:1px solid #eee}
+.portal-dialog.panel-pay .order-info li:last-child{border:0}
+.portal-dialog.panel-pay .order-info .label{float:left}
+.portal-dialog.panel-pay .order-info .value{float:right}
+.portal-dialog.panel-pay .order-info .icon{float:right;margin-left:10px}
+.portal-dialog.panel-pay .info-pay-total{text-align:center;font-size:28px;font-weight:700;padding:40px 0}
+.portal-dialog.panel-pay .pay-method{cursor:pointer}
+.portal-dialog.panel-pay .pay-method-select{position:absolute;top:0;left:0;width:100%;height:100%;box-sizing:border-box;padding:20px;background:#fff;transform:translateX(100%);transition:all .3s}
+.portal-dialog.panel-pay .pay-method-select.active{transform:translateX(0)}
+.portal-dialog.panel-pay .pay-method-select .item-list{color:#fff}
+.portal-dialog.panel-pay .pay-method-select .item-list li{position:relative;padding-left:60px;cursor:pointer}
+.portal-dialog.panel-pay .pay-method-select .item-list .icon-selected{position:absolute;left:0;top:0;display:none;width:60px;height:60px;text-align:center;line-height:60px;font-size:21px}
+.portal-dialog.panel-pay .pay-method-select .item-list .icon-img{float:right;height:100%}
+.portal-dialog.panel-pay .pay-method-select .item-list .alipay{background:#1677ff}
+.portal-dialog.panel-pay .pay-method-select .item-list .alipay:active{background:#0566ee}
+.portal-dialog.panel-pay .pay-method-select .item-list .wechat{background:#21ac38}
+.portal-dialog.panel-pay .pay-method-select .item-list .wechat:active{background:#109b27}
+.portal-dialog.panel-prod .panel-content{top:50%;height:100%}
+.portal-dialog.panel-prod .pay-num-grid{font-size:0;margin:-5px -5px 20px -5px}
+.portal-dialog.panel-prod .pay-num-grid .module{display:inline-block;width:33.33%;box-sizing:border-box;padding:5px;cursor:pointer;vertical-align:top}
+.portal-dialog.panel-prod .pay-num-grid .module.active .module-container{background:#409eff;color:#fff}
+.portal-dialog.panel-prod .pay-num-grid .module .module-container{height:60px;line-height:58px;text-align:center;box-sizing:border-box;border:1px solid #409eff;border-radius:4px;color:#409eff}
+.portal-dialog.panel-prod .pay-num-grid .module .value{font-size:17px;font-weight:500;margin-right:2px}
+.portal-dialog.panel-prod .pay-num-grid .module .unit{font-size:14px;font-weight:400}
+.portal-dialog.panel-prod .btn-confirm{margin-top:40px}
+.portal-dialog.panel-prod .input-price-container{padding:0 5px;margin-top:5px}
+.portal-dialog.panel-prod .input-price{width:100%;height:60px;border:1px solid #409eff;border-radius:4px;padding:0 20px;box-sizing:border-box;font-size:17px;display:none}
+.portal-dialog.panel-prod .input-price::-webkit-input-placeholder{font-weight:400;color:#909399}
+.portal-dialog.panel-prod.active .panel-content{transform:translateY(-50%)}
+
+.portal-alert{position:fixed;left:0;top:0;width:100%;height:100%;background:#888;background:rgba(0,0,0,.7);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);z-index:10000;opacity:0;visibility:hidden;transition:all .3s .3s}
+.portal-alert .panel-content{position:absolute;width:80%;max-width:500px;left:50%;top:50%;background:#fff;box-sizing:border-box;transform:translate(-50%,-50%);transition:all .3s ease-in-out;border-radius:10px;box-shadow:0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)}
+.portal-alert .panel-header .panel-title{font-size:17px;margin-top:20px;text-align:center;color:#303133}
+.portal-alert .panel-section{position:relative;box-sizing:border-box;padding:10px 15px;border-bottom:1px solid #dcdfe6;min-height:60px}
+.portal-alert .panel-section .content{font-weight:300;line-height:30px}
+.portal-alert .panel-footer{height:45px}
+.portal-alert .panel-footer button{height:100%;font-size:14px;font-weight:600;cursor:pointer}
+.portal-alert .panel-footer button:active,.portal-alert .panel-footer button:hover{background:rgba(0,0,0,.1)}
+.portal-alert .panel-footer .btn-confirm{float:left;width:100%;color:#409eff}
+.portal-alert .panel-footer .btn-cancel{float:right;display:none;width:50%;color:#f56c6c;border-left:1px solid #dcdfe6}
+.portal-alert.active{opacity:1;visibility:visible;transition:all .3s}
+.portal-alert.active .panel-content{transform:translate(-50%,-50%);transition:all .3s .3s ease-in-out}
+.portal-alert.center .panel-section .content{text-align:center}
+.portal-alert.center .panel-section .content li{list-style: disc}
+.portal-alert.cancel .panel-footer .btn-confirm{width:50%}
+.portal-alert.cancel .panel-footer .btn-cancel{display:block}
+
+@media screen and (min-width: 768px) {
+    .portal-dialog.panel-prod .panel-content {
+        left: 50%;
+        width: 420px;
+        height: 70% !important;
+        margin-left: -210px;
+        border-radius: 4px;
+    }
+
+    .portal-dialog.panel-pay .panel-content {
+        width: 500px;
+        left: 50%;
+        margin-left: -250px;
+    }
+}

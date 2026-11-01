@@ -1,0 +1,6 @@
+apply plugin: 'com.android.application'
+android {
+ namespace 'cn.buct.campusconnect'
+ compileSdk 34
+ defaultConfig { applicationId 'cn.buct.campusconnect'; minSdk 23; targetSdk 34; versionCode 4; versionName '1.3' }
+}
