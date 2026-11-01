@@ -1,6 +1,6 @@
 # 校园网助手
 
-面向北京化工大学校园网的账号同步与认证辅助工具，支持 Android 应用和 iPhone 网页版。
+面向北京化工大学校园网的账号同步与认证辅助工具，支持 Android 应用和 iPhone 快捷指令。
 
 学校认证入口：[tree.buct.edu.cn](https://tree.buct.edu.cn/)。本项目为个人工具，与学校官方客户端无隶属关系。
 
@@ -9,8 +9,8 @@
 - **账户拥有者**：在设备上加密账号密码，上传到 Cloudflare，并生成分享码。
 - **使用者**：通过分享码同步账号，在连接校园 Wi-Fi 前保存到本机。
 - **Android**：打开学校真实认证页面，尝试自动填入账号密码并点击登录。
-- **iPhone**：通过 Safari 网页同步账号，分别复制账号、密码到学校认证页面完成登录。
-- Android 使用 Android Keystore 加密本机数据；网页使用 Web Crypto 与 IndexedDB 保存加密数据，并通过 Service Worker 缓存页面。
+- **iPhone**：通过 Safari 快捷指令尝试自动填写并提交学校认证页面。
+- Android 使用 Android Keystore 加密本机数据；快捷指令使用 Web Crypto 解密共享密文。
 
 > 分享码包含解密所需的密钥。持有分享码的人可以取得完整账号和密码，请只分享给可信任且获得授权的使用者。已同步的副本无法远程撤回。
 
@@ -28,16 +28,7 @@
 
 ### iPhone
 
-当前部署的网页入口：
-
-[打开校园网助手](https://buct-campus-relay-237239.pages.dev/ios/)
-
-1. 使用 Safari 打开入口，通过分享菜单选择“添加到主屏幕”。
-2. 建议先添加，再从主屏幕打开并同步账号。
-3. 连接校园 Wi-Fi，分别复制账号和密码，在学校认证页面粘贴并登录。
-
-iPhone 网页版目前不支持向学校页面自动填写账号密码。清除网站数据或移除本机存储可能导致账号、分享码和拥有者上传权限丢失。离线缓存是否保留取决于浏览器和系统。
-
+iPhone 网页应用已停用。可以尝试使用 Safari 快捷指令自动填写并提交。创建和使用步骤见 [iPhone 快捷指令说明](app/ios-shortcut/README.md)。使用者需要拥有分享码，并从学校认证页面的 Safari 分享菜单运行快捷指令。实际效果需在校园网中的 iPhone 上验证。
 ## 项目结构
 
 ~~~text
@@ -47,10 +38,11 @@ iPhone 网页版目前不支持向学校页面自动填写账号密码。清除�
 └── app/
     ├── android/                原生 Android Java 项目
     ├── cloudflare/             Worker 与 Durable Object 存储服务
-    ├── cloudflare-pages/       Pages 备用入口及 iPhone 网页版
+    ├── cloudflare-pages/       Pages 备用入口及快捷指令支持
     │   └── public/
     │       ├── _worker.js      转发至原 Worker
-    │       └── ios/            网页、样式、脚本及离线缓存
+    │       └── ios/            快捷指令及已停用的旧网页源文件
+    ├── ios-shortcut/           iPhone 快捷指令脚本与使用说明
     ├── artifacts/              本地生成的 APK
     └── 使用说明.md
 ~~~
@@ -99,7 +91,7 @@ Pages 通过服务绑定访问 Worker，不依赖手机直接访问 `workers.dev
 - Android 默认入口定义在 `MainActivity.java` 的 `DEFAULT_ENDPOINT` 中。
 - 部署自己的项目后，将其替换为新的 Pages HTTPS 地址。
 - 页面中的上传和同步请求使用同源 `/v1/` 接口。
-- iPhone 入口为 Pages 地址后加 `/ios/`。
+- iPhone 快捷指令脚本在 Pages 地址后加 `/ios/shortcut.txt`；自行部署时还需修改脚本中的服务地址。
 
 当前仓库中的公开入口属于现有部署，仅用于说明。自行部署时应使用自己的项目与地址。
 
@@ -129,7 +121,7 @@ app/android/app/build/outputs/apk/debug/app-debug.apk
 | 方法 | 路径 | 用途 |
 | --- | --- | --- |
 | GET | / | Pages 入口状态检查 |
-| GET | /ios/ | iPhone 网页版 |
+| GET | /ios/shortcut.txt | iPhone 快捷指令脚本 |
 | GET | /v1/:id | 读取账号密文 |
 | PUT | /v1/:id | 创建或更新账号密文 |
 
